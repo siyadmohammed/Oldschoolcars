@@ -58,28 +58,31 @@
 						<div class="formtile">
                           <div class="wrapper">
                              <h2>Registration</h2>
-							   <form action="#">
+							   <form action="" method="post">
+								   {% csrf_token %}
+                                     {% for field_name, field_errors in form.errors.items %}
+                                          {% for error in field_errors %}
+                                             <h6 style="color:red">{{ error }}</h6>
+                                          {% endfor %}
+                                     {% endfor %}
                                   <div class="input-box">
-                                    <input type="text" placeholder="Enter your name" required>
+									  {{form.username}}
 								  </div>
                                   <div class="input-box">
-									  <input type="text" placeholder="Enter your email" required>
+
+									  {{form.email}}
      							  </div>
      							  <div class="input-box">
-									  <input type="password" placeholder="Create password" required>
+									  {{form.password1}}
 								  </div>
       							  <div class="input-box">
-									  <input type="password" placeholder="Confirm password" required>
+									  {{form.password2}}
 								  </div>
-      							  <div class="policy">
-                                      <input type="checkbox">
-                                      <h3>I accept all terms & condition</h3>
-                                  </div>
                                   <div class="input-box button">
-                                      <input type="Submit" value="Register Now">
+                                   <input type="Submit" value="Register">
                                   </div>
 								   <div class="text">
-                                  <h3>Already have an account? <a href="/userlogin/">Login now</a></h3>
+                                  <h3>Already have an account? <a href="/login/">Login now</a></h3>
                                    </div>
                                 </form>
                           </div>
@@ -176,7 +179,8 @@
 
 		<script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
 		<script src="{% static 'assets/js/tiny-slider.js'%}"></script>
-		<script src="{% static 'assets/js/custom.js'%}"></script>
+		<script src="{% static 'assets/js/jquery-3.7.1.min.js'%}"></script>
+		<script src="{% static 'assets/js/custom1.js'%}"></script>
 	</body>
 
 </html>

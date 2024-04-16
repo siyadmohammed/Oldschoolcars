@@ -40,3 +40,42 @@
 </div>
 </body>
 </html>
+
+
+
+
+def userlogin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            messages.info(request, "invalid login credentials")
+        return redirect('userlogin')
+    return render(request, 'cars/userlogin.html')
+
+
+def userreg(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        if User.objects.filter(username=username).exists():
+            messages.info(request, "username already exists")
+            return redirect('userreg')
+        elif User.objects.filter(email=email).exists():
+            messages.info(request, "email taken")
+            return redirect('userreg')
+        else:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+        return redirect("/")
+    return render(request, 'cars/userreg.html')
+
+
+def userlogout(request):
+    auth.logout(request)
+    return redirect("/")
